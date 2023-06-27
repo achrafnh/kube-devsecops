@@ -25,7 +25,8 @@ pipeline {
 
     stage('Docker Build and Push') {
       steps {
-          withDockerRegistry(credentialsId: 'dockerhubnhaila', url:'') {
+          withCredentials([string(credentialsId: 'docker-hub-password', variable: 'DOCKER_HUB_PASSWORD')]) {
+              sh 'sudo docker login -u hrefnhaila -p $DOCKER_HUB_PASSWORD'
               sh 'printenv'
               sh 'sudo docker build -t hrefnhaila/numeric-app:""$GIT_COMMIT"" .'
               sh 'docker push hrefnhaila/numeric-app:""$GIT_COMMIT""'
