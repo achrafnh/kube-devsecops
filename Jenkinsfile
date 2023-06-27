@@ -34,7 +34,12 @@ pipeline {
     }
 
 
-
+ stage('Deployment Kubernetes ') {
+steps {
+  sh 'kubectl apply -f  K8'
+}
+   
+ }
     
     }
 }
