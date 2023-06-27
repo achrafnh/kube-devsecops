@@ -21,8 +21,6 @@ pipeline {
       
         }
 
-
-
     stage('Docker Build and Push') {
       steps {
           withCredentials([string(credentialsId: 'docker-hub-password', variable: 'DOCKER_HUB_PASSWORD')]) {
