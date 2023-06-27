@@ -27,7 +27,7 @@ pipeline {
               sh 'sudo docker login -u hrefnhaila -p $DOCKER_HUB_PASSWORD'
               sh 'printenv'
               sh 'sudo docker build -t hrefnhaila/numeric-app:""$GIT_COMMIT"" .'
-              sh 'docker push hrefnhaila/numeric-app:""$GIT_COMMIT""'
+              sh 'sudo docker push hrefnhaila/numeric-app:""$GIT_COMMIT""'
           }
         
       }
