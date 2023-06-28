@@ -1,0 +1,3 @@
+fileignoreconfig:
+- filename: security-risk/fileC
+  checksum: 0c3148f451d36b5c83826701bdc37a12e0a758f7eca88f4633c82652f2c6d3dd
