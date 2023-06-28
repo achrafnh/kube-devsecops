@@ -38,21 +38,17 @@ pipeline {
 //--------------------------
 
     
-  //        stage('SonarQube - SAST') {
-//          
-//           steps {
-//         withSonarQubeEnv('SonarQube') {
-//            sh "mvn clean verify sonar:sonar -Dsonar.projectKey=myapp -Dsonar.projectName=myapp -Dsonar.host.url=http://demo-test2.eastus.cloudapp.azure.com:9000"
-//         }
-//         timeout(time: 2, unit: 'MINUTES') {
-//           script {
-//             waitForQualityGate abortPipeline: true
-//           }
-//         }
-//       }
-//          
-// 
-//     }
+          stage('SonarQube - SAST') {
+          
+           steps {
+         withSonarQubeEnv('SonarQube') {
+            sh "mvn clean verify sonar:sonar -Dsonar.projectKey=myapp -Dsonar.projectName=myapp -Dsonar.host.url=http:demo-test2.eastus.cloudapp.azure.com:9000"
+         }
+      
+       }
+          
+ 
+     }
 //--------------------------
     stage('Vulnerability Scan - Docker') {
    steps {
