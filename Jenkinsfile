@@ -36,8 +36,11 @@ pipeline {
     }
 
 //--------------------------
+
+    
         stage('SonarQube - SAST') {
-       steps {
+            try {
+           steps {
          withSonarQubeEnv('SonarQube') {
             sh "mvn clean verify sonar:sonar -Dsonar.projectKey=myapp -Dsonar.projectName=myapp -Dsonar.host.url=http://demo-test2.eastus.cloudapp.azure.com:9000"
          }
@@ -47,8 +50,26 @@ pipeline {
            }
          }
        }
-     }
+  } catch (Exception e) {
+      echo 'Exception occurred: ' + e.toString()
+      sh 'Handle the exception!'
+  }
+          
  
+     }
+
+//--------------------------
+    stage('Vulnerability Scan - Docker') {
+   steps {
+     		sh "mvn dependency-check:check"
+		}
+		post { 
+      always { 
+				dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+				}
+		}
+ }
+
 //--------------------------
     stage('Docker Build and Push') {
       steps {
