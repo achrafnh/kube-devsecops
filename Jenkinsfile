@@ -38,9 +38,7 @@ pipeline {
 //--------------------------
    stage('SonarQube - SAST') {
        steps {
-         withSonarQubeEnv('SonarQube') {
-           sh "mvn clean verify sonar:sonar -Dsonar.projectKey=myapp -Dsonar.projectName='myapp'-Dsonar.host.url=http://demo-test2.eastus.cloudapp.azure.com:9000 -Dsonar.token=sqp_0effd3aa606a27a6aaeb31b226a39a3402b77a8e"
-         }
+           sh "mvn clean verify sonar:sonar -Dsonar.projectKey=myapp -Dsonar.projectName=myapp -Dsonar.host.url=http://demo-test2.eastus.cloudapp.azure.com:9000 -Dsonar.token=sqp_0effd3aa606a27a6aaeb31b226a39a3402b77a8e"
        }
      }
  
