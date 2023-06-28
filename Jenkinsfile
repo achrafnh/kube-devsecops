@@ -78,7 +78,13 @@ withCredentials([string(credentialsId: 'token-sonar', variable: 'TOKEN_SONAR')])
 				}
 		}
  }
-
+//--------------------------
+	 stage('Vulnerability Scan - Docker Trivy') {
+       steps {
+	 sh "bash trivy-docker-image-scan.sh"
+       }
+     }
+	  
 //--------------------------
     stage('Docker Build and Push') {
       steps {
