@@ -42,8 +42,11 @@ pipeline {
           
            steps {
          withSonarQubeEnv('SonarQube') {
-            sh "mvn clean verify sonar:sonar -Dsonar.projectKey=myapp -Dsonar.projectName=myapp -Dsonar.host.url=http:demo-test2.eastus.cloudapp.azure.com:9000"
+
+withCredentials([string(credentialsId: 'token-sonar', variable: 'TOKEN-SONAR')]) {
+            sh "mvn clean verify sonar:sonar -Dsonar.projectKey=myapp -Dsonar.projectName=myapp -Dsonar.host.url=http:demo-test2.eastus.cloudapp.azure.com:9000 -Dsonar.token=$TOKEN-SONAR"
          }
+}
       
        }
           
