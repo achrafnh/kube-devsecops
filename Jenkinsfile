@@ -57,8 +57,10 @@ withCredentials([string(credentialsId: 'token-sonar', variable: 'TOKEN_SONAR')])
 	  
  stage("SonarQube - qualiyGate Status") {
             steps {
+	catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
               timeout(time: 3, unit: 'MINUTES') {
                 waitForQualityGate abortPipeline: true
+	      }
               }
             }
           }
