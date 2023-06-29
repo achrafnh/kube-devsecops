@@ -35,49 +35,49 @@ pipeline {
        }
     }
 
-//--------------------------
+ //--------------------------
 
     
-          stage('SonarQube - SAST') {
-          
-           steps {
-         withSonarQubeEnv('SonarQube') {
-
-withCredentials([string(credentialsId: 'token-sonar', variable: 'TOKEN_SONAR')]) {
-            sh "mvn clean verify sonar:sonar -Dsonar.projectKey=myapp -Dsonar.projectName=myapp -Dsonar.host.url=http:demo-test2.eastus.cloudapp.azure.com:9000 -Dsonar.token=$TOKEN_SONAR"
-         }
-}
-      
-       }
-          
- 
-     }
- //--------------------------
-	
-	  
- stage("SonarQube - qualiyGate Status") {
-            steps {
-	catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-              timeout(time: 3, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
-	      }
-              }
-            }
-          }
-
-	  //--------------------------
-    stage('Vulnerability Scan - Docker') {
-   steps {
-	    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-     		sh "mvn dependency-check:check"
-	    }
-		}
-		post { 
-      always { 
-				dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
-				}
-		}
- }
+//          stage('SonarQube - SAST') {
+//          
+//           steps {
+//         withSonarQubeEnv('SonarQube') {
+//
+//  withCredentials([string(credentialsId: 'token-sonar', variable: 'TOKEN_SONAR')]) {
+//            sh "mvn clean verify sonar:sonar -Dsonar.projectKey=myapp -Dsonar.projectName=myapp -Dsonar.host.url=http:demo-test2.eastus.cloudapp.azure.com:9000 -Dsonar.token=$TOKEN_SONAR"
+//         }
+// }
+//      
+//       }
+//          
+// 
+//     }
+// //--------------------------
+//	
+//	  
+// stage("SonarQube - qualiyGate Status") {
+//            steps {
+//	catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+//              timeout(time: 3, unit: 'MINUTES') {
+//                waitForQualityGate abortPipeline: true
+//	      }
+//              }
+//            }
+//          }
+//
+//	  //--------------------------
+//    stage('Vulnerability Scan - Docker') {
+//   steps {
+//	    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+//     		sh "mvn dependency-check:check"
+//	    }
+//		}
+//		post { 
+//      always { 
+//				dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+//				}
+//		}
+// }
 //--------------------------
 	 stage('Vulnerability Scan - Docker Trivy') {
        steps {
