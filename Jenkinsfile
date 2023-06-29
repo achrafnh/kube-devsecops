@@ -81,7 +81,10 @@ withCredentials([string(credentialsId: 'token-sonar', variable: 'TOKEN_SONAR')])
 //--------------------------
 	 stage('Vulnerability Scan - Docker Trivy') {
        steps {
-	 sh "sudo bash trivy-docker-image-scan.sh"
+	        withCredentials([string(credentialsId: 'trivy_github_token', variable: 'TOKEN')]) {
+	 sh "sed -i 's#token_github#${TOKEN}#g' trivy-image-scan.sh"      
+	 sh "sudo bash trivy-image-scan.sh"
+	       }
        }
      }
 	  
